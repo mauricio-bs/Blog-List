@@ -11,7 +11,7 @@ const flash = require('connect-flash')
 //configurações
     //Sessão
         app.use(session({
-            secret: "cursonode",
+            secret: "cursodenode",
             resave: true,
             saveUninitialized: true
         }))
@@ -19,7 +19,7 @@ const flash = require('connect-flash')
 
     //Midleware
         app.use((req, res, next) => {
-            res.locals.success_msg = req.flash("Success_msg")
+            res.locals.success_msg = req.flash("success_msg")
             res.locals.error_msg = req.flash("error_msg")
             next()
         })
@@ -29,7 +29,11 @@ const flash = require('connect-flash')
         app.use(json())
     
     //handlebars
-        app.engine('handlebars', handlebars({defaultLayout: 'main'}))
+        app.engine('handlebars', handlebars({
+            defaultLayout: 'main', runtimeOptions:{
+            allowProtoPropertiesByDefault: true,
+            allowProtoMethodsByDefault: true
+        }}))
         app.set('view engine', 'handlebars')
     
     //mongoose
