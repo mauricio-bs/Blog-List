@@ -31,6 +31,7 @@ const Cat = require('./models/Categoria')
         app.use((req, res, next) => {
             res.locals.success_msg = req.flash("success_msg")
             res.locals.error_msg = req.flash("error_msg")
+            res.locals.error = req.flash("error")
             next()
         })
 
@@ -115,10 +116,9 @@ const Cat = require('./models/Categoria')
             res.redirect('/')
         })
     })
+
     app.use('/usuarios', usuarios)
-
     app.use('/admin', admin)
-
 
 //outros
 const PORT = 8081

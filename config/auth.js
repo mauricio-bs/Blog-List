@@ -5,21 +5,23 @@ const bcrypt = require('bcryptjs')
 const User = require('../models/usuario')
 
 module.exports = function(passport){
-    passport.use(new localStrategy({usernameField: 'email'}, (email, senha, done) => {
+    
+    passport.use(new localStrategy({usernameField: 'email', passwordField: 'senha'}, (email, senha, done) => {
         User.findOne({email: email}).then((usuario) => {
             if(!usuario){
-                return done(null, false, {message: 'Esta conta não existe'})
+                return done(null, false, {message: "Esta conta não existe"})
             }
             
             bcrypt.compare(senha, usuario.senha, (erro, batem) => {
                 if(batem){
-                    return done(null, user)
+                    return done(null, usuario)
                 }else{
-                    return done(null, false, {message: 'Senha incorreta'})
+                    return done(null, false, {message: "Senha incorreta"})
                 }
             })
         })
     }))
+
 
     passport.serializeUser((usuario, done) => {
         done(null, usuario.id)
@@ -27,7 +29,7 @@ module.exports = function(passport){
     
     passport.deserializeUser((id, done) => {
         User.findById(id, (err, usuario) => {
-            done(err, user)
+            done(err, usuario)
         })
     })
 
