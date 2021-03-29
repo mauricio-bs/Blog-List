@@ -5,6 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
     "dotenv": "^8.2.0",
@@ -14,6 +15,8 @@
     "mongoose": "^5.12.2",
     "nodejs": "0.0.0",
     "nodemon": "^2.0.7",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "path": "^0.12.7"
   },
   "devDependencies": {},
