@@ -4,9 +4,10 @@ const {urlencoded, json} = require('body-parser')
 const app = express()
 const admin = require('./routes/admin')
 const path = require('path')
-const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
+//models
+const PostDB = require('./models/postagem')
 
 //configurações
     //Sessão
@@ -44,6 +45,23 @@ const flash = require('connect-flash')
         app.use(express.static(path.join(__dirname, 'public')))
 
 //Rotas
+    app.get('/', (req, res) => {
+        PostDB.find().populate('categoria').sort({data: 'desc'}).then((postagens) => {
+            res.render('index', {postagens: postagens})
+        }).catch((err) => {
+            req.flash('error_msg', 'Houve um erro interno')
+            res.redirect('/404')
+        })
+    })
+
+    app.get('/404', (req, res) => {
+        res.send('Erro 404!')
+    })
+
+    app.get('/posts', (req, res) => {
+        res.send('Lista de Posts')
+    })
+
     app.use('/admin', admin)
 
 
